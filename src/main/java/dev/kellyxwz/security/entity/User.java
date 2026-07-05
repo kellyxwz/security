@@ -1,20 +1,20 @@
 package dev.kellyxwz.security.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "email")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
