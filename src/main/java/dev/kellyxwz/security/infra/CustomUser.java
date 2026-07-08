@@ -1,4 +1,4 @@
-package dev.kellyxwz.security;
+package dev.kellyxwz.security.infra;
 
 import dev.kellyxwz.security.entity.User;
 import org.jspecify.annotations.Nullable;
