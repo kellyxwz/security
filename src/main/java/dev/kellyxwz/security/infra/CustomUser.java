@@ -14,7 +14,8 @@ public record CustomUser (User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE"));
+        String role ="ROLE_" + user.getRole().getRole();
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
