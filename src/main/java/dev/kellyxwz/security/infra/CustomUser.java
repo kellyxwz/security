@@ -14,7 +14,8 @@ public record CustomUser (User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role ="ROLE_" + user.getRole().getRole();
+        String role ="ROLE_" + user.getRole().name();
+
         return List.of(new SimpleGrantedAuthority(role));
     }
 
@@ -47,4 +48,6 @@ public record CustomUser (User user) implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

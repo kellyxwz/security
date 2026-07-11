@@ -2,17 +2,8 @@ package dev.kellyxwz.security.entity;
 
 public enum UserRoles {
 
-    USER("user"),
-    ADMIN("admin");
+    USER,
+    ADMIN;
 
-    private String role;
-
-    UserRoles (String role){
-        this.role =role;
-    }
-
-    public String getRole(){
-        return role;
-    }
 
 }

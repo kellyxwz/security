@@ -22,7 +22,7 @@ public class TokenConfig {
 
     }
 
-    private String generateToken(User user){
+    public String generateToken(User user){
         try {
             return JWT.create()
                     .withIssuer("auth-api")

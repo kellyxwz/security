@@ -5,6 +5,9 @@ import dev.kellyxwz.security.dto.reponse.RegisterUserResponse;
 import dev.kellyxwz.security.dto.request.LoginRequest;
 import dev.kellyxwz.security.dto.request.RegisterUserRequest;
 import dev.kellyxwz.security.entity.User;
+import dev.kellyxwz.security.entity.UserRoles;
+import dev.kellyxwz.security.infra.CustomUser;
+import dev.kellyxwz.security.infra.TokenConfig;
 import dev.kellyxwz.security.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +27,13 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenConfig tokenConfig;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenConfig = tokenConfig;
     }
 
     @PostMapping("/login")
@@ -36,7 +41,11 @@ public class AuthController {
         UsernamePasswordAuthenticationToken userPass = new UsernamePasswordAuthenticationToken(userLogin.email(), userLogin.password());
         Authentication authentication = authenticationManager.authenticate(userPass);
 
-        return null;
+        CustomUser customUser = (CustomUser) authentication.getPrincipal();
+
+        String token = tokenConfig.generateToken(customUser.user());
+
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping("/register")
@@ -45,6 +54,7 @@ public class AuthController {
         user.setName(userRegister.name());
         user.setEmail(userRegister.email());
         user.setPassword(passwordEncoder.encode(userRegister.password()));
+        user.setRole(UserRoles.USER);
 
         User newUser = userRepository.save(user);
 
