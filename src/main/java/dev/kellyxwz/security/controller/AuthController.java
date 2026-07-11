@@ -36,7 +36,7 @@ public class AuthController {
         UsernamePasswordAuthenticationToken userPass = new UsernamePasswordAuthenticationToken(userLogin.email(), userLogin.password());
         Authentication authentication = authenticationManager.authenticate(userPass);
 
-        return null
+        return null;
     }
 
     @PostMapping("/register")
